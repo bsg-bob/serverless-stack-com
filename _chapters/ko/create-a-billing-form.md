@@ -2,24 +2,24 @@
 layout: post
 title: Create a Billing Form
 date: 2018-03-23 00:00:00
-lang: en
-description: We will create a billing form in our React app using the Stripe React SDK. We will use the CardElement to let the user input their credit card details and call the createToken method to generate a token that we can pass to our serverless billing API.
+lang: ko
+description: Stripe React SDK를 사용하여 React 앱에 청구 양식을 작성합니다. CardElement를 사용하여 사용자가 신용 카드 세부 정보를 입력하도록하고 createToken 메소드를 호출하여 serverless billing API에 전달할 수있는 토큰을 생성합니다. 
 context: true
-ref: create-a-billing-form
 comments_id: create-a-billing-form/186
+ref: create-a-billing-form
 ---
 
-Now our settings page is going to have a form that will take a user's credit card details, get a stripe token and call our billing API with it. Let's start by adding the Stripe React SDK to our project.
+이제 설정 페이지에는 사용자의 신용 카드 정보를 가져 와서 Stripe 토큰을 받고 결제 API를 호출하는 양식을 추가합니다. Stripe React SDK를 프로젝트에 추가해 보겠습니다.
 
-<img class="code-marker" src="/assets/s.png" />From our project root, run the following.
+<img class="code-marker" src="/assets/s.png" />프로젝트 루트에서 다음을 실행합니다.
 
 ``` bash
 $ npm install --save react-stripe-elements
 ```
 
-Next let's create our billing form component.
+다음으로 청구서 양식 컴포넌트를 생성합니다.
 
-<img class="code-marker" src="/assets/s.png" />Add the following to a new file in `src/components/BillingForm.js`.
+<img class="code-marker" src="/assets/s.png" />아래 내용을 추가한 `src/components/BillingForm.js`파일을 생성합니다.
 
 {% raw %}
 ``` coffee
@@ -126,25 +126,25 @@ export default injectStripe(BillingForm);
 ```
 {% endraw %}
 
-Let's quickly go over what we are doing here:
+우리가 여기서 뭘하고 있는지 빨리 알아 보겠습니다.
 
-- To begin with we are going to wrap our component with a Stripe module using the `injectStripe` HOC. This gives our component access to the `this.props.stripe.createToken` method.
+- 먼저 우리는 `injectStripe` HOC를 사용하여 Stripe 모듈로 컴포넌트를 만들어서 사용할 것입니다. 그리고 이 컴포넌트가 `this.props.stripe.createToken` 메소드에 접근할 수 있게합니다.
 
-- As for the fields in our form, we have input field of type `number` that allows a user to enter the number of notes they want to store. We also take the name on the credit card. These are stored in the state through the `this.handleFieldChange` method.
+- 양식의 필드는 사용자가 저장할 노트 수를 입력할 수있는 `number` 타입의 입력 필드가 있습니다. 또한 신용카드상의 이름을 사용합니다. 이것들은 `this.handleFieldChange` 메서드를 통해 state에 저장됩니다.
 
-- The credit card number form is provided by the Stripe React SDK through the `CardElement` component that we import in the header.
+- 신용카드 번호 양식은 헤더에서 가져 오는 `CardElement` 구성 요소를 통해 Stripe React SDK에 의해 제공됩니다.
 
-- The submit button has a loading state that is set to true when we call Stripe to get a token and when we call our billing API. However, since our Settings container is calling the billing API we use the `this.props.loading` to set the state of the button from the Settings container.
+- 전송 버튼에는 Stripe을 호출하여 토큰을 얻고 결제 API를 호출할 때 로딩 상태를 true로 설정합니다. 그러나 Setting 컨테이너가 결제 API를 호출하므로 `this.props.loading`을 사용하여 버튼의 상태를 Setting 컨테이너에서 설정합니다.
 
-- We also validate this form by checking if the name, the number of notes, and the card details are complete. For the card details, we use the CardElement's `onChange` method.
+- 또한 이름, 노트 수 및 카드 세부 사항이 완료되었는지 확인하여이 양식의 유효성을 검사합니다. 카드의 세부 사항을 위해 우리는 CardElement의 onChange 메소드를 사용합니다.
 
-- Finally, once the user completes and submits the form we make a call to Stripe by passing in the credit card name and the credit card details (this is handled by the Stripe SDK). We call the `this.props.stripe.createToken` method and in return we get the token or an error back. We simply pass this and the number of notes to be stored to the settings page via the `this.props.onSubmit` method. We will be setting this up shortly.
+- 마지막으로 사용자가 양식을 완성하고 제출하면 신용 카드 이름과 신용 카드 세부 정보(Stripe SDK에서 처리)를 전달하여 Stripe에 요청합니다. 우리는 `this.props.stripe.createToken` 메소드를 호출하고 리턴 값으로 토큰이나 에러를 반환합니다. 이 값과 notes 수를 `this.props.onSubmit` 메소드를 통해 Setting 페이지에 저장하면됩니다. 곧 바로 이것을 설정해보겠습니다.
 
-You can read more about how to use the [React Stripe Elements here](https://github.com/stripe/react-stripe-elements).
+[여기에서 React Stripe Elements](https://github.com/stripe/react-stripe-elements) 사용 방법에 대한 자세한 내용을 볼 수 있습니다.
 
-Also, let's add some styles to the card field so it matches the rest of our UI.
+또한 신용카드 필드에 스타일을 추가하여 나머지 UI와 일치하도록하십시오.
 
-<img class="code-marker" src="/assets/s.png" />Create a file at `src/components/BillingForm.css`.
+<img class="code-marker" src="/assets/s.png" />아래 내용으로 `src/components/BillingForm.css` 파일을 생성합니다.
 
 ``` css
 .BillingForm .card-field {
@@ -163,13 +163,13 @@ Also, let's add some styles to the card field so it matches the rest of our UI.
 }
 ```
 
-### Commit the Changes
+### 변경 사항 커밋
 
-<img class="code-marker" src="/assets/s.png" />Let's quickly commit these to Git.
+<img class="code-marker" src="/assets/s.png" />Git에 변경 사항을 빠르게 커밋합니다.
 
 ``` bash
 $ git add .
 $ git commit -m "Adding a billing form"
 ```
 
-Next we'll plug our form into the settings page.
+다음으로 작성한 양식을 Setting 페이지에 연결하겠습니다.
